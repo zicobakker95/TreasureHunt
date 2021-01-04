@@ -63,7 +63,7 @@ void UEpicLeaderboardObject::GetLeaderboardEntries(FString PlayerName, bool Arou
 {
 	//setup the request
 	FString url = FString::Printf(TEXT("http://%s/api/getScores.php?accessID=%s&username=%s&around=%d"), TEXT("epicleaderboard.com"), *ID, *PlayerName, AroundPlayer);
-	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
+	auto Request = FHttpModule::Get().CreateRequest();
 	Request->OnProcessRequestComplete().BindUObject(this, &UEpicLeaderboardObject::OnHighscoreResponseReceived);
 
 	Request->SetURL(url);
@@ -152,7 +152,7 @@ void UEpicLeaderboardObject::SubmitScoreInternal(FString username, float score, 
 	//setup the request
 	FString url = FString::Printf(TEXT("http://%s/api/submitScore.php"), TEXT("epicleaderboard.com"));
 
-	TSharedRef<IHttpRequest> Request = FHttpModule::Get().CreateRequest();
+	auto Request = FHttpModule::Get().CreateRequest();
 	Request->OnProcessRequestComplete().BindUObject(this, &UEpicLeaderboardObject::OnScoreSubmitResponseReceived);
 
 	Request->SetURL(url);
